@@ -29,6 +29,15 @@ public class UserController {
         userMapper.insert(user);
         return Result.success();
     }
+    //登录
+    @PostMapping("/login")
+    public Result<?> login(@RequestBody User user){
+       User res=userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getUsername,user.getUsername()).eq(User::getPassword,user.getPassword()));
+       if(res ==null){
+           return Result.error("-1","用户名或密码错误");
+       }
+        return Result.success();
+    }
 
     //更新
     @PutMapping
