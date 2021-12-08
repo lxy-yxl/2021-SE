@@ -21,10 +21,10 @@
 
       <el-table-column fixed="right" label="操作" width="120">
         <template #default="scope">
-          <el-button type="text"  @click="handleEdit(scope.row)"
+          <el-button type="text"  @click="handleEdit(scope.row.id)"
           >编辑</el-button>
 
-          <el-popconfirm title="确认删除吗?">
+          <el-popconfirm title="确认删除吗?" @confirm="handleDelete(scope.row.id)">
             <template #reference>
               <el-button type="text">删除</el-button>
             </template>
@@ -72,8 +72,8 @@
         </el-form>
         <template #footer>
            <span class="dialog-footer">
-              <el-button @click="dialogVisible = false">Cancel</el-button>
-               <el-button type="primary" @click="save">Confirm</el-button>
+              <el-button @click="dialogVisible = false">取消</el-button>
+               <el-button type="primary" @click="save">确定</el-button>
       </span>
         </template>
       </el-dialog>
@@ -83,6 +83,7 @@
 
 <script>
 import request from "../utils/request";
+import {ElMessage} from "element-plus";
 
 export default {
   name:'Home',
@@ -91,7 +92,7 @@ export default {
 },
   data() {
     return {
-       form:{},
+      form:{},
       dialogVisible:false,
       search: '',
       currentPage:1,
@@ -122,16 +123,37 @@ export default {
           request.put("/api/user",this.form).then(res =>{
             console.log(res)
             if(res.code === '0'){
-              this.message({
-                type:"success"
+              ElMessage({
+                type: 'success',
+                message:'更新成功',
+              })
+            }else{
+              ElMessage({
+                type: 'error',
+                message:'更新失败',
               })
             }
+
+            this.load() //刷新数据
+            this.dialogVisible= false
           })
       }
       else {
         request.post("/api/user", this.form).then(res => {
           console.log(res)
-          this.message()
+          if(res.code === '0'){
+            ElMessage({
+              type: 'success',
+              message:'新增成功',
+            })
+          }else{
+            ElMessage({
+              type: 'error',
+              message:'新增失败',
+            })
+          }
+          this.load() //刷新数据
+          this.dialogVisible= false
         })
       }
     },
@@ -143,11 +165,31 @@ export default {
         this.form = JSON.parse(JSON.stringify((row)))
         this.dialogVisible=true
     },
-    handleSizeChange(){
-
+    handleSizeChange(pageSize){  //改变当每页展示条目的数量
+      this.pageSize=pageSize
+      this.load()
     },
-    handleCurrentChange(){
-
+    handleCurrentChange(pageNum){  //改变当前页码
+      this.currentPage=pageNum
+      this.load()
+    },
+    handleDelete(id){
+      console.log(id)
+      request.delete("/api/user/"+id).then(res => {
+        console.log(res)
+        if(res.code === '0'){
+          ElMessage({
+            type: 'success',
+            message:'删除成功',
+          })
+        }else{
+          ElMessage({
+            type: 'error',
+            message:'删除失败',
+          })
+        }
+        this.load() //刷新数据
+      })
     }
   }
 }

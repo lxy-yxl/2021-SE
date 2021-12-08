@@ -49,4 +49,10 @@ public class UserController {
        Page<User> userPage=userMapper.selectPage( new Page<>(pageNum ,pageSize),wrapper );
         return Result.success(userPage);
     }
+
+    @DeleteMapping("/{id}")
+    public Result<?> update(@PathVariable Long id){
+        userMapper.deleteById(id);
+        return Result.success();
+    }
 }
