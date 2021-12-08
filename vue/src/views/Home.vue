@@ -39,7 +39,7 @@
       <el-pagination
           v-model:currentPage="currentPage"
           :page-sizes="[5, 10, 20]"
-          :page-size="10"
+          :page-size="pageSize"
           layout="total, sizes, prev, pager, next, jumper"
           :total="total"
           @size-change="handleSizeChange"
@@ -95,13 +95,25 @@ export default {
       dialogVisible:false,
       search: '',
       currentPage:1,
-      total:10,
-      tableData: [
-
-      ],
+      pageSize:10,
+      total:0,
+      tableData: [],
     }
   },
+  created(){
+    this.load()
+  },
   methods:{
+    load(){
+        request.get("/api/user",{
+          pageNum: this.currentPage,
+          pageSize: this.pageSize,
+          search:this.search
+        }).then(res=>{
+          console.log(res)
+          this.tableData=res.data.record
+        })
+    },
     save(){
         request.post("/api/user",this.form).then(res =>{
             console.log(res)
