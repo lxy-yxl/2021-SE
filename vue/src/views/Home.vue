@@ -8,8 +8,8 @@
     </div>
 <!-- 搜索区域   -->
     <div style="margin: 10px 0">
-      <el-input v-model="search" style="width:20%" placeholder="请输入关键字" />
-      <el-button type="primary" style="margin-left: 5px">搜索</el-button>
+      <el-input v-model="search" style="width:20%" placeholder="请输入关键字" clearable/>
+      <el-button type="primary" style="margin-left: 5px" @click="load">搜索</el-button>
     </div>
     <el-table :data="tableData" border stripe style="width: 100%">
       <el-table-column prop="id" label="ID" sortable/>
@@ -106,25 +106,42 @@ export default {
   methods:{
     load(){
         request.get("/api/user",{
-          pageNum: this.currentPage,
-          pageSize: this.pageSize,
-          search:this.search
+          params:{
+            pageNum: this.currentPage,
+            pageSize: this.pageSize,
+            search:this.search
+          }
         }).then(res=>{
           console.log(res)
-          this.tableData=res.data.record
+          this.tableData=res.data.records
+          this.total=res.data.total
         })
     },
     save(){
-        request.post("/api/user",this.form).then(res =>{
+      if (this.form.id){
+          request.put("/api/user",this.form).then(res =>{
             console.log(res)
+            if(res.code === '0'){
+              this.message({
+                type:"success"
+              })
+            }
+          })
+      }
+      else {
+        request.post("/api/user", this.form).then(res => {
+          console.log(res)
+          this.message()
         })
+      }
     },
     add(){
         this.dialogVisible=true
         this.form={}
     },
-    handleEdit(){
-
+    handleEdit(row){
+        this.form = JSON.parse(JSON.stringify((row)))
+        this.dialogVisible=true
     },
     handleSizeChange(){
 

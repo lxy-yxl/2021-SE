@@ -20,6 +20,7 @@ public class UserController {
     @Resource
     UserMapper userMapper;
 
+    //新增
     @PostMapping
     public Result<?> save(@RequestBody User user){
         if(user.getPassword()==null){
@@ -29,6 +30,14 @@ public class UserController {
         return Result.success();
     }
 
+    //更新
+    @PutMapping
+    public Result<?> update(@RequestBody User user){
+       userMapper.updateById(user);
+        return Result.success();
+    }
+
+    //查找
     @GetMapping
     public Result<?> findPage(@RequestParam(defaultValue = "1")Integer pageNum,
                               @RequestParam(defaultValue = "10")Integer pageSize,
