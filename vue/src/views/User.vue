@@ -106,7 +106,7 @@ export default {
   },
   methods:{
     load(){
-        request.get("/api/user",{
+        request.get("/user",{
           params:{
             pageNum: this.currentPage,
             pageSize: this.pageSize,
@@ -120,7 +120,7 @@ export default {
     },
     save(){
       if (this.form.id){
-          request.put("/api/user",this.form).then(res =>{
+          request.put("/user",this.form).then(res =>{
             console.log(res)
             if(res.code === '0'){
               ElMessage({
@@ -139,7 +139,7 @@ export default {
           })
       }
       else {
-        request.post("/api/user", this.form).then(res => {
+        request.post("/user", this.form).then(res => {
           console.log(res)
           if(res.code === '0'){
             ElMessage({
@@ -175,7 +175,7 @@ export default {
     },
     handleDelete(id){
       console.log(id)
-      request.delete("/api/user/"+id).then(res => {
+      request.delete("/user/"+id).then(res => {
         console.log(res)
         if(res.code === '0'){
           ElMessage({

@@ -39,6 +39,21 @@ public class UserController {
         return Result.success();
     }
 
+    //注册
+    @PostMapping("/register")
+    public Result<?> register(@RequestBody User user){
+        //判断用户名是否唯一
+        User res=userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getUsername,user.getUsername()));
+        if(res !=null){
+            return Result.error("-1","用户名重复");
+        }
+        if(user.getPassword()==null){
+            user.setPassword("123456");
+        }
+        userMapper.insert(user);
+        return Result.success();
+    }
+
     //更新
     @PutMapping
     public Result<?> update(@RequestBody User user){
