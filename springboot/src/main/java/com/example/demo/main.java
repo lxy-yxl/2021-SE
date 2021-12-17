@@ -48,7 +48,7 @@ public class main {
         //全局配置
         GlobalConfig globalConfig = new GlobalConfig();
         // 工程的绝对路径+下面的目录,根据自己的路径修改
-        globalConfig.setOutputDir(System.getProperty("user.dir")+"/2021-SE(test)/springboot/src/main/java");
+        globalConfig.setOutputDir(System.getProperty("user.dir")+"/springboot/src/main/java");
         globalConfig.setOpen(false);
         globalConfig.setAuthor("cj");
         globalConfig.setServiceName("%sService");
