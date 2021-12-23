@@ -2,18 +2,46 @@ package com.example.demo.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-@TableName("user")
+/**
+ * <p>
+ * 用户表
+ * </p>
+ *
+ * @author cj
+ * @since 2021-12-23
+ */
 @Data
-public class User {
-    @TableId(type = IdType.AUTO)
-    private Integer id;
-    private String username;
-    private String password;
+  @EqualsAndHashCode(callSuper = false)
+    public class User implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+      @TableId(value = "user_id", type = IdType.AUTO)
+      private Integer userId;
+
     private String nickName;
-    private Integer age;
-    private String sex;
-    private String address;
+
+    private String password;
+
+    private String avatar;
+
+    private String gender;
+
+    private Integer telphone;
+
+    private String email;
+
+    private String zone;
+
+    private String registerTime;
+
+    private String role;
+
+    private String reputation;
+
+
 }

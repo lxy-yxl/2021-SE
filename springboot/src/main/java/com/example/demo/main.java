@@ -38,9 +38,9 @@ public class main {
         //数据源
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
         dataSourceConfig.setDbType(DbType.MYSQL);
-        dataSourceConfig.setUrl("jdbc:mysql://localhost:3306/pigplatform?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true");
+        dataSourceConfig.setUrl("jdbc:mysql://121.37.172.109/pigplatform?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true");
         dataSourceConfig.setUsername("root");
-        dataSourceConfig.setPassword("1102Carol");
+        dataSourceConfig.setPassword("!ZQFzqf123");
         dataSourceConfig.setDriverName("com.mysql.cj.jdbc.Driver");
         autoGenerator.setDataSource(dataSourceConfig);
 
