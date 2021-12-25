@@ -5,6 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.demo.annotation.UserLoginToken;
 import com.example.demo.common.Result;
 import com.example.demo.entity.Object;
 import com.example.demo.mapper.ObjectMapper;
@@ -27,13 +28,15 @@ public class ObjectController {
     @Resource
     ObjectMapper objectMapper;
 
+    @UserLoginToken
     @PostMapping
     public Result<?> upload(@RequestBody Object object){
         objectMapper.insert(object);
         return Result.success();
     }
 
-    @GetMapping
+    @UserLoginToken
+    @PostMapping("/getList")
     public Result<?> findPage(@RequestParam(defaultValue = "1")Integer pageNum,
                               @RequestParam(defaultValue = "10")Integer pageSize,
                               @RequestParam(defaultValue = "")String search){

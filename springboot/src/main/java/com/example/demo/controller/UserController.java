@@ -1,12 +1,16 @@
 package com.example.demo.controller;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.demo.annotation.PassToken;
+import com.example.demo.annotation.UserLoginToken;
 import com.example.demo.common.Result;
 import com.example.demo.entity.User;
 import com.example.demo.mapper.UserMapper;
+import com.example.demo.util.JwtUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -26,7 +30,8 @@ public class UserController {
     @Resource
     UserMapper userMapper;
 
-    @GetMapping
+    @UserLoginToken
+    @PostMapping("/getList")
     public Result<?> findPage(@RequestParam(defaultValue = "1")Integer pageNum,
                               @RequestParam(defaultValue = "10")Integer pageSize,
                               @RequestParam(defaultValue = "")String search){
@@ -38,5 +43,55 @@ public class UserController {
         return Result.success(userPage);
     }
 
+    //新增
+    @UserLoginToken
+    @PostMapping("/insert")
+    @ResponseBody
+    public Result<?> save(User user){
+        if(user.getPassword()==null){
+            user.setPassword("123456");
+        }
+        userMapper.insert(user);
+        return Result.success();
+    }
+
+    //登录
+    @PassToken
+    @PostMapping("/login")
+    public Object login( User user){
+        JSONObject jsonObject=new JSONObject();
+        User res=userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getNickName,user.getNickName()));
+        if(res==null || !res.getPassword().equals(user.getPassword())){
+            return Result.error("-1","用户名或密码输入错误");
+        }else {
+
+            String token = JwtUtil.getToken(user.getNickName(),user.getPassword());
+
+            jsonObject.put("token", token);
+            return Result.success(jsonObject);
+        }
+    }
+
+    @UserLoginToken
+    @GetMapping("/getMessage")
+    public String getMessage(){
+        return "你已通过验证";
+    }
+
+    //注册
+    @PassToken
+    @PostMapping("/register")
+    public Result<?> register(@RequestBody User user){
+        //判断用户名是否唯一
+        User res=userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getNickName,user.getNickName()));
+        if(res !=null){
+            return Result.error("-1","用户名重复");
+        }
+        if(user.getPassword()==null){
+            user.setPassword("123456");
+        }
+        userMapper.insert(user);
+        return Result.success();
+    }
 }
 
