@@ -44,7 +44,7 @@ public class PictureController {
 //    }
     @Resource
     private PictureService pictureService;
-    private final static String UPLOAD_PATH = "F:/upload";
+    private final static String UPLOAD_PATH = "F:/upload";      //本机路径
 
 
     @UserLoginToken
