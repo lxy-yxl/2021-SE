@@ -4,6 +4,8 @@ import com.example.demo.entity.Picture;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * <p>
  * 图片表 服务类
@@ -21,5 +23,5 @@ public interface PictureService extends IService<Picture> {
      * @return 上传并处理后的信息
      * @throws Exception 上传异常
      */
-    String upload(MultipartFile file, String uploadFilePath) throws Exception;
+    String upload(MultipartFile file, String uploadFilePath, HttpServletRequest request) throws Exception;
 }

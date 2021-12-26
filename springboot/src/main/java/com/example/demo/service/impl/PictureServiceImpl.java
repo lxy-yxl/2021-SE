@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -25,55 +26,31 @@ import java.util.Random;
  */
 @Service
 public class PictureServiceImpl extends ServiceImpl<PictureMapper, Picture> implements PictureService {
-    /**
-     *
-     * @param from
-     * fileInfo[0]: toPrefix;
-     * fileInfo[1]:toSuffix;
-     * @return
-     */
-    public static String[] getFileInfo(File from){
-        String fileName=from.getName();
-        int index = fileName.lastIndexOf(".");
-        String toPrefix="";
-        String toSuffix="";
-        if(index==-1){
-            toPrefix=fileName;
-        }else{
-            toPrefix=fileName.substring(0,index);
-            toSuffix=fileName.substring(index,fileName.length());
-        }
-        return new String[]{toPrefix,toSuffix};
-    }
-    public static String generateSuffix() {
-        // 获得当前时间
-        DateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
-        // 转换为字符串
-        String formatDate = format.format(new Date());
-        // 随机生成文件编号
-        int random = new Random().nextInt(10000);
-        return new StringBuffer().append(formatDate).append(
-                random).toString();
-    }
 
-    public static File createFileWithCurDate(File from){
-        String[] fileInfo = getFileInfo(from);
-        String toPrefix=fileInfo[0]+generateSuffix();
-        String toSuffix=fileInfo[1];
-        return new File(from.getParent(),toPrefix+toSuffix);
-    }
+
     @Override
-    public String upload(MultipartFile file, String uploadFilePath) throws Exception {
+    public String upload(MultipartFile file, String uploadFilePath, HttpServletRequest request) throws Exception {
         if (file.isEmpty())
             return null;
         String uploadInfo="";
         String fileName;
         // 获得当前时间
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd/");
         DateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
         // 转换为字符串
         String formatDate = format.format(new Date());
         // 随机生成文件编号
         int random = new Random().nextInt(10000);
+        /**
+         *  2.文件保存目录  E:/images/2020/03/15/
+         *  如果目录不存在，则创建
+         */
+        String directory = simpleDateFormat.format(new Date());
+        File dir = new File(uploadFilePath + directory);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        //3.给文件重新设置一个名字
         fileName =(new StringBuffer().append(formatDate).append(
                 random)) + file.getOriginalFilename();
         String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
@@ -82,9 +59,9 @@ public class PictureServiceImpl extends ServiceImpl<PictureMapper, Picture> impl
         if (!packageFile.exists()) {
             packageFile.mkdir();
         }
-        File targetFile = new File(uploadFilePath + "/" + fileName);
+        File targetFile = new File(uploadFilePath + directory + fileName);
         file.transferTo(targetFile);
-        uploadInfo = targetFile.toString();
+        uploadInfo = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/upload/"+directory+ fileName;
 
         //是否使用一个接口还是两个接口仍需讨论
         //尚未决定表的存储方法
