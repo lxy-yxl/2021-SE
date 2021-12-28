@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * 消息表 服务类
  * </p>
  *
- * @author cj
+ * @author
  * @since 2021-12-17
  */
 public interface MessageService extends IService<Message> {

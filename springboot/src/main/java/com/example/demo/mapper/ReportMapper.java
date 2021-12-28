@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * 报告表 Mapper 接口
  * </p>
  *
- * @author cj
+ * @author
  * @since 2021-12-17
  */
 public interface ReportMapper extends BaseMapper<Report> {

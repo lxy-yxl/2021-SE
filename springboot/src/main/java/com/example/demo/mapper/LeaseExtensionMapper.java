@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  Mapper 接口
  * </p>
  *
- * @author cj
+ * @author
  * @since 2021-12-17
  */
 public interface LeaseExtensionMapper extends BaseMapper<LeaseExtension> {
