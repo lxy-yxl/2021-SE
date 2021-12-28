@@ -7,7 +7,7 @@
         <result property="password" column="password"/>
         <result property="avatar" column="avatar"/>
         <result property="gender" column="gender"/>
-        <result property="telphone" column="telphone"/>
+        <result property="telephone" column="telephone"/>
         <result property="email" column="email"/>
         <result property="zone" column="zone"/>
         <result property="registerTime" column="register_time"/>

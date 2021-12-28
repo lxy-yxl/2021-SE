@@ -34,7 +34,7 @@ import lombok.EqualsAndHashCode;
 
     private String gender;
 
-    private Integer telphone;
+    private Integer telephone;
 
     private String email;
 
