@@ -31,8 +31,10 @@ public class OrderController {
     @Resource
     OrderServiceImpl orderService;
 
-    @GetMapping("getOrderList")
-    public Result<?> getOrderList()
+//    @GetMapping("getOrderList")
+//    public Result<?> getOrderList(){
+//        return
+//    }
 
 
     @GetMapping("generateOrder")
