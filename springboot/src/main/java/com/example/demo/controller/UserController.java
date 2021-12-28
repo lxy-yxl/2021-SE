@@ -10,6 +10,8 @@ import com.example.demo.annotation.UserLoginToken;
 import com.example.demo.common.Result;
 import com.example.demo.entity.User;
 import com.example.demo.mapper.UserMapper;
+import com.example.demo.service.UserService;
+import com.example.demo.service.impl.UserServiceImpl;
 import com.example.demo.util.JwtUtil;
 import org.springframework.web.bind.annotation.*;
 
@@ -66,7 +68,6 @@ public class UserController {
         }else {
 
             String token = JwtUtil.getToken(user.getNickName(),user.getPassword());
-
             jsonObject.put("token", token);
             return Result.success(jsonObject);
         }
@@ -92,6 +93,21 @@ public class UserController {
         }
         userMapper.insert(user);
         return Result.success();
+    }
+
+    @Resource
+    private UserServiceImpl userService;
+
+    /**
+     * 多表联查，一对多，分页
+     * @param page 当前页
+     * @param size 每页条数
+     *
+     */
+    @GetMapping("pageTestA/{page}/{size}")
+    public Page<User> pageTestA(@PathVariable Integer page, @PathVariable Integer size){
+        Page<User> iPage = new Page<User>(page, size);
+        return userService.getAll(iPage);
     }
 }
 

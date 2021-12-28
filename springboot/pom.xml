@@ -26,11 +26,7 @@
 			<artifactId>mybatis-plus-boot-starter</artifactId>
 			<version>3.4.3.1</version>
 		</dependency>
-		<dependency>
-			<groupId>org.mybatis.spring.boot</groupId>
-			<artifactId>mybatis-spring-boot-starter</artifactId>
-			<version>2.2.0</version>
-		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/com.alipay.sdk/alipay-easysdk -->
 		<dependency>
 			<groupId>com.alipay.sdk</groupId>
@@ -91,6 +87,24 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<resources>
+		<resource>
+			<directory>springboot/src/main/java</directory>
+			<includes>
+				<include>**/*.properties</include>
+				<include>**/*.xml</include>
+			</includes>
+			<filtering>false</filtering>
+		</resource>
+		<resource>
+			<directory>springboot/src/main/resources</directory>
+			<includes>
+				<include>**/*.properties</include>
+				<include>**/*.xml</include>
+			</includes>
+			<filtering>false</filtering>
+		</resource>
+		</resources>
 	</build>
 
 </project>

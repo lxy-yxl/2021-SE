@@ -63,7 +63,7 @@ public class AliPayController {
                 System.out.println("买家付款时间: " + params.get("gmt_payment"));
                 System.out.println("买家付款金额: " + params.get("buyer_pay_amount"));
 
-                // 更新订单未已支付
+                // 更新订单为已支付
 //                orderMapper.updateState(tradeNo, 1, gmtPayment);
             }
         }
