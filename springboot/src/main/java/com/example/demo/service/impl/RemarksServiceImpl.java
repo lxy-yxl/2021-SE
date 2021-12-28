@@ -6,6 +6,8 @@ import com.example.demo.service.RemarksService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 /**
  * <p>
  * 评价表
@@ -17,5 +19,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RemarksServiceImpl extends ServiceImpl<RemarksMapper, Remarks> implements RemarksService {
+
+    @Resource
+    RemarksServiceImpl remarksService;
+
+    @Resource
+    RemarksMapper remarksMapper;
+
+    public
+
+
 
 }
