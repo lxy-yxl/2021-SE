@@ -46,8 +46,6 @@ import lombok.EqualsAndHashCode;
 
     private String reputation;
 
-  @TableField(exist = false)
-  private List<Object> objects;
 
 
 }

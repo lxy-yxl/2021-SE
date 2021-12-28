@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 /**
  * <p>
@@ -39,8 +40,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
             order.setReturnTime(return_time);
             order.setObjectId(object_id);
             order.setStatus("待支付");
-            order.setFinishedTime(LocalDateTime.now());
+            order.setFinishedTime(null);
             order.setCreatedTime(LocalDateTime.now());
+            order.setCampus(campus);
             int rent_daily = objectService.getBaseMapper().selectById(object_id).getRentDaliy();
             order.setRentTotal(rent_daily * lent_days);
             int count = orderMapper.insert(order);
@@ -66,7 +68,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
             return 1;
     }
 
-    public int cancel_order(int order_id){
+    public int cancelOrder(int order_id){
         Order order = orderMapper.selectById(order_id);
         if (order == null){
             return -1;
@@ -83,6 +85,13 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
                 return 1;
             }
         }
+    }
+
+    public List<Order> getOrderList(int user_id){
+        QueryWrapper<Order> wrapper = new QueryWrapper<>();
+        wrapper.eq("borrower_id", user_id);
+        List<Order> order_list = orderMapper.selectList(wrapper);
+        return order_list;
     }
 
 }

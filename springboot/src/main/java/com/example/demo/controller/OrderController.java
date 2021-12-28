@@ -16,6 +16,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -32,7 +34,14 @@ public class OrderController {
     OrderServiceImpl orderService;
 
     @GetMapping("getOrderList")
-    public Result<?> getOrderList()
+    public Result<?> getOrderList(int user_id){
+        List<Order> orderList = new ArrayList<>();
+        orderList=orderService.getOrderList(user_id);
+        if(orderList.isEmpty()){
+            return Result.error("-1","没有订单记录");
+        }
+        else return Result.success(orderList);
+    }
 
 
     @GetMapping("generateOrder")
@@ -60,9 +69,9 @@ public class OrderController {
         else return Result.success();
     }
 
-    @GetMapping("cancel_order")
-    public Result<?> cancel_order(int order_id){
-        int flag = orderService.cancel_order(order_id);
+    @GetMapping("cancelOrder")
+    public Result<?> cancelOrder(int order_id){
+        int flag = orderService.cancelOrder(order_id);
         if(flag == -1)
             return Result.error("-1", "未找到相应订单");
         else if(flag == -2)

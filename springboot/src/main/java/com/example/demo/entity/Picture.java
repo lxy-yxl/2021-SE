@@ -25,7 +25,7 @@ import lombok.EqualsAndHashCode;
 
     private Integer type;
 
-    private Integer itemId;
+    private Integer objectId;
 
     private String pictureUrl;
 

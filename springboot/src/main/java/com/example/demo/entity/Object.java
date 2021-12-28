@@ -20,8 +20,8 @@ import lombok.EqualsAndHashCode;
 
     private static final long serialVersionUID = 1L;
 
-      @TableId(value = "product_id", type = IdType.AUTO)
-      private Integer productId;
+      @TableId(value = "object_id", type = IdType.AUTO)
+      private Integer objectId;
 
     private String name;
 

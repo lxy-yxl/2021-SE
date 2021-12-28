@@ -16,7 +16,7 @@
         <collection property="objects" column="product_id"
                     select="com.example.demo.mapper.ObjectMapper.selectByUserId"/>
     </resultMap>
-    <select id="getAll" resultMap="s_r">
+    <select id="getAll" resultType="cn.hutool.json.JSONObject">
         select * from user
     </select>
 

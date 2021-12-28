@@ -13,4 +13,14 @@
         <result property="newLevel" column="new_level"/>
     </resultMap>
 
+    <select id="getObjectDetail" resultType="cn.hutool.json.JSONObject">
+        select name,picture_url,rent_daliy,description,new_level,A.nick_name,A.avatar,A.reputation,B.nick_name,B.avatar,time,grade,content
+        from object
+            join user A on object.user_id=A.user_id
+            join picture on object.object_id=picture.object_id
+            join remarks on object.object_id=remarks.object_id
+            join user B on remarks.user_id=B.user_id
+        where object.object_id=#{object_id}
+    </select>
+
 </mapper>

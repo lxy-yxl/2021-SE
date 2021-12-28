@@ -1,5 +1,6 @@
 package com.example.demo.mapper;
 
+import cn.hutool.json.JSONObject;
 import com.example.demo.entity.Object;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.demo.entity.User;
@@ -18,5 +19,7 @@ import java.util.List;
 public interface ObjectMapper extends BaseMapper<Object> {
     @Select("select * from object where user_id=#{userId}")
     List<Object> selectByUserId(Integer userId);
+
+    JSONObject getObjectDetail(int object_id);
 
 }

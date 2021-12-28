@@ -45,5 +45,7 @@ import lombok.EqualsAndHashCode;
 
     private LocalDateTime finishedTime;
 
+    private String campus;
+
 
 }
