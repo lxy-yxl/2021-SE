@@ -3,6 +3,7 @@ package com.example.demo.service.impl;
 import cn.hutool.json.JSONObject;
 import cn.hutool.poi.excel.cell.CellSetter;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.demo.common.Result;
 import com.example.demo.entity.Object;
@@ -11,6 +12,7 @@ import com.example.demo.mapper.ObjectMapper;
 import com.example.demo.mapper.PictureMapper;
 import com.example.demo.service.ObjectService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import io.swagger.models.auth.In;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -34,9 +36,11 @@ public class ObjectServiceImpl extends ServiceImpl<ObjectMapper, Object> impleme
     @Resource
     PictureMapper pictureMapper;
 
-    public JSONObject getObjectDetail(int object_id){
+    public JSONObject getObjectDetail(Integer object_id){
         JSONObject detail;
         detail = objectMapper.getObjectDetail(object_id);
+        if(detail==null)
+            return null;
         List<String> urls = objectMapper.getPictureUrl(object_id);
         Integer rent_count = objectMapper.getRentCount(object_id);
         detail.put("urls", urls);
@@ -89,6 +93,7 @@ public class ObjectServiceImpl extends ServiceImpl<ObjectMapper, Object> impleme
             object.setRentDaliy(rent_daily);
         if(new_level!=null)
             object.setNewLevel(new_level);
+        object.setStatus("待审核");
         return objectMapper.updateById(object);
     }
 
@@ -113,6 +118,13 @@ public class ObjectServiceImpl extends ServiceImpl<ObjectMapper, Object> impleme
             jsonObjects.add(jsonObject);
         }
         return jsonObjects;
+    }
+
+    public Page<Object> viewPendingObject(IPage<Object> iPage){
+        QueryWrapper<Object> wrapper=new QueryWrapper<>();
+        wrapper.eq("status", "待审核");
+        return (Page<Object>) objectMapper.selectPage(iPage, wrapper);
+
     }
 
 }

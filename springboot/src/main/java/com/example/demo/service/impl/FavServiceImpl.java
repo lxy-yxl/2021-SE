@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import cn.hutool.json.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.demo.entity.Fav;
 import com.example.demo.mapper.FavMapper;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -22,6 +25,8 @@ import java.time.LocalDateTime;
 public class FavServiceImpl extends ServiceImpl<FavMapper, Fav> implements FavService {
     @Resource
     FavMapper favMapper;
+    @Resource
+    ObjectServiceImpl objectService;
 
 
     public Integer collect(Integer fav_id, Integer object_id){
@@ -43,4 +48,21 @@ public class FavServiceImpl extends ServiceImpl<FavMapper, Fav> implements FavSe
         return favMapper.queryObjectInFav(object_id, user_id);
     }
 
+    public List<JSONObject> viewFavouriteCart(Integer fav_id){
+        QueryWrapper<Fav> wrapper=new QueryWrapper<>();
+        wrapper.eq("fav_id", fav_id);
+        List<Fav> favs=favMapper.selectList(wrapper);
+        if(favs.isEmpty())
+            return null;
+        List<JSONObject> objectDetails=new ArrayList<>();
+        for (Fav fav:favs) {
+            Integer object_id = fav.getObjectId();
+            JSONObject objectDetail = objectService.getObjectDetail(object_id);
+            if(objectDetail!=null)
+                objectDetails.add(objectDetail);
+        }
+        return objectDetails;
+
+
+    }
 }

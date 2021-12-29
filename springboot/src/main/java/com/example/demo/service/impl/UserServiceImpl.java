@@ -2,6 +2,7 @@ package com.example.demo.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.demo.entity.Object;
 import com.example.demo.entity.User;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.service.UserService;
@@ -26,5 +27,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public Page<User> getAll(IPage<User> iPage) {
         return userMapper.getAll(iPage);
     }
+
 
 }

@@ -10,4 +10,6 @@
         where  `user`.user_id=#{user_id} and fav.object_id=#{object_id}
     </select>
 
+
+
 </mapper>

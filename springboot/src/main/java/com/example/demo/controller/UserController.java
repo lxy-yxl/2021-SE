@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.demo.annotation.PassToken;
 import com.example.demo.annotation.UserLoginToken;
 import com.example.demo.common.Result;
+import com.example.demo.entity.Object;
 import com.example.demo.entity.User;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.service.UserService;
@@ -60,7 +61,7 @@ public class UserController {
     //登录
     @PassToken
     @PostMapping("/login")
-    public Object login( User user){
+    public Result<?> login( User user){
         JSONObject jsonObject=new JSONObject();
         User res=userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getNickName,user.getNickName()));
         if(res==null || !res.getPassword().equals(user.getPassword())){
@@ -109,5 +110,7 @@ public class UserController {
         Page<User> iPage = new Page<User>(page, size);
         return userService.getAll(iPage);
     }
+
+
 }
 

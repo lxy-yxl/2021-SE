@@ -12,6 +12,7 @@ import com.example.demo.entity.Object;
 
 import com.example.demo.mapper.ObjectMapper;
 import com.example.demo.service.impl.ObjectServiceImpl;
+import io.swagger.models.auth.In;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -61,7 +62,10 @@ public class ObjectController {
     public Result<?> getObjectDetail(int object_id){
         JSONObject jsonObject;
         jsonObject = objectService.getObjectDetail(object_id);
-        return Result.success(jsonObject);
+        if(jsonObject==null)
+            return Result.error("-1", "暂时无法查看该物品信息");
+        else
+            return Result.success(jsonObject);
     }
 
     @GetMapping("getObjectListByType")
@@ -116,6 +120,38 @@ public class ObjectController {
 
     }
 
+    public ObjectServiceImpl getObjectService() {
+        return objectService;
+    }
 
+    @GetMapping("viewPendingObject")
+    public Result<?> viewPendingObject(Integer page){
+        Page<Object> iPage = new Page<>(page, 10);
+        Page<Object> objectPage = objectService.viewPendingObject(iPage);
+        if(objectPage.getTotal()==0)
+            return Result.error("-1", "当前没有待审核物品");
+        else return Result.success(objectPage);
+    }
+
+    @GetMapping("verifyObject")
+    public Result<?> verifyObject(Integer object_id, Boolean check){
+        Object object=new Object();
+        if(check == Boolean.TRUE)
+            object.setStatus("审核通过");
+        else object.setStatus("未通过审核");
+        object.setObjectId(object_id);
+        if(objectService.updateById(object)==Boolean.TRUE)
+            return Result.success();
+        else return Result.error("-1", "审核操作失败");
+    }
+
+    @GetMapping("removeObject")
+    public Result<?> removeObject(Integer object_id){
+        Object object=new Object();
+        object.setObjectId(object_id);
+        if(objectService.removeById(object_id)==Boolean.TRUE)
+            return Result.success();
+        else return Result.error("-1", "下架操作失败");
+    }
 }
 
