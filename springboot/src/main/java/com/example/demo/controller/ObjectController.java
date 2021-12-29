@@ -21,7 +21,7 @@ import javax.annotation.Resource;
  *  前端控制器
  * </p>
  *
- * @author cj
+ * @author
  * @since 2021-12-17
  */
 @RestController
@@ -53,6 +53,7 @@ public class ObjectController {
         return Result.success(userPage);
     }
 
+
     @GetMapping("getObjectDetail")
     public Result<?> getObjectDetail(int object_id){
         JSONObject jsonObject=new JSONObject();
@@ -61,6 +62,4 @@ public class ObjectController {
         return Result.success(jsonObject);
 
     }
-
-}
 

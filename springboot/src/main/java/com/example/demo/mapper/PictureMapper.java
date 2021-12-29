@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * 图片表 Mapper 接口
  * </p>
  *
- * @author cj
+ * @author
  * @since 2021-12-17
  */
 public interface PictureMapper extends BaseMapper<Picture> {

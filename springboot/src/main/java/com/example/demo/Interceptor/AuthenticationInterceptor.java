@@ -34,7 +34,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         }
         HandlerMethod handlerMethod = (HandlerMethod) object;
         Method method = handlerMethod.getMethod();
-        String authHeader = httpServletRequest.getHeader("Authorization");// 从 http 请求头中取出 token
+        String authHeader = httpServletRequest.getHeader("Authorization4");// 从 http 请求头中取出 token
 
         //检查是否有passtoken注释，有则跳过认证
         if (method.isAnnotationPresent(PassToken.class)) {

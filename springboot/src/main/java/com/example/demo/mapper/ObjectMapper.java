@@ -13,7 +13,7 @@ import java.util.List;
  *  Mapper 接口
  * </p>
  *
- * @author cj
+ * @author
  * @since 2021-12-17
  */
 public interface ObjectMapper extends BaseMapper<Object> {

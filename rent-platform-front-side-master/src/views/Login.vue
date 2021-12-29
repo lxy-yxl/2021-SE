@@ -56,6 +56,8 @@ export default {
     },
     login(){
       //....逻辑代码
+
+
       this.$store.commit('LOGIN');//mutation LOGIN
       this.$router.push('/');
     }

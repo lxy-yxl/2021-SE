@@ -33,6 +33,7 @@ public class OrderController {
     @Resource
     OrderServiceImpl orderService;
 
+
     @GetMapping("getOrderList")
     public Result<?> getOrderList(int user_id){
         List<Order> orderList = new ArrayList<>();
@@ -42,6 +43,7 @@ public class OrderController {
         }
         else return Result.success(orderList);
     }
+
 
 
     @GetMapping("generateOrder")

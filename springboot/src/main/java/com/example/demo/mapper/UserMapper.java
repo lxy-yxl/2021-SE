@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 用户表 Mapper 接口
  * </p>
  *
- * @author cj
+ * @author
  * @since 2021-12-23
  */
 

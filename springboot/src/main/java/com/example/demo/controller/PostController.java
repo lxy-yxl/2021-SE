@@ -14,7 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
  * @author cj
  * @since 2021-12-17
  */
+
+@Controller
+
 @RestController
+
 @RequestMapping("/post")
 public class PostController {
 
