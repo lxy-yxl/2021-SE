@@ -1,6 +1,7 @@
 package com.example.demo.mapper;
 
 import cn.hutool.json.JSONObject;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.demo.entity.Object;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.demo.entity.User;
@@ -22,4 +23,11 @@ public interface ObjectMapper extends BaseMapper<Object> {
 
     JSONObject getObjectDetail(int object_id);
 
+    List<String> getPictureUrl(int object_id);
+
+    Integer getRentCount(int object_id);
+
+    Page<JSONObject> getObjectListByType(String type, Page<JSONObject> ipage);
+
+    List<JSONObject> recommend();
 }

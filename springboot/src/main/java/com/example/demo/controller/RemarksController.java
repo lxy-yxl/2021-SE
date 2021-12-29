@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>
@@ -30,8 +31,8 @@ public class RemarksController {
 
     @GetMapping("getRemarkList")
     public Result<?> getRemarkList(int object_id){
-        List<JSONObject> remarks = remarksService.getRemarkList(object_id);
-        if(remarks.isEmpty()){
+        JSONObject remarks = remarksService.getRemarkList(object_id);
+        if(Objects.equals(remarks.get("commentNum").toString(), "0")){
             return Result.error("-1", "暂无评论");
         }
         else return Result.success(remarks);

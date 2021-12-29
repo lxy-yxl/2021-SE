@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.demo.annotation.UserLoginToken;
 import com.example.demo.common.Result;
 import com.example.demo.entity.Object;
+
 import com.example.demo.mapper.ObjectMapper;
 import com.example.demo.service.impl.ObjectServiceImpl;
 import org.springframework.web.bind.annotation.*;
@@ -56,17 +57,29 @@ public class ObjectController {
 
 
     @GetMapping("getObjectDetail")
-<<<<<<< Updated upstream
-    public Result<?> getObjectDetail(int object_id) {
-        JSONObject jsonObject = new JSONObject();
-=======
+
     public Result<?> getObjectDetail(int object_id){
         JSONObject jsonObject;
->>>>>>> Stashed changes
         jsonObject = objectService.getObjectDetail(object_id);
-
         return Result.success(jsonObject);
+    }
 
+    @GetMapping("getObjectListByType")
+    public Result<?> getObjectListByType(String type, Integer page){
+        Page<JSONObject> iPage = new Page<JSONObject>(page, 6);
+        iPage=objectService.getObjectListByType(type,iPage);
+        return Result.success(iPage);
+
+    }
+
+    @GetMapping("recommend")
+    public Result<?> recommend(){
+        List<JSONObject> jsonObjects;
+        jsonObjects = objectService.recommend();
+        if(jsonObjects.isEmpty()) {
+            return Result.error("-1", "暂无商品信息");
+        }
+        else return Result.success(jsonObjects);
     }
 }
 

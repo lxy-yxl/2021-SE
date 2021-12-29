@@ -13,14 +13,54 @@
         <result property="newLevel" column="new_level"/>
     </resultMap>
 
+
+
     <select id="getObjectDetail" resultType="cn.hutool.json.JSONObject">
-        select name,picture_url,rent_daliy,description,new_level,nick_name,avatar,reputation
+        select name,rent_daliy,description,new_level,nick_name,avatar,reputation
         from object
             join user on object.user_id=user.user_id
-            join picture on object.object_id=picture.object_id
+--             join picture on object.object_id=picture.object_id
 --             left outer join remarks on object.object_id=remarks.object_id
 --             left outer join user B on remarks.user_id=B.user_id
         where object.object_id=#{object_id}
+    </select>
+    <select id="getPictureUrl" resultType="String">
+        select picture_url
+        from object join picture on object.object_id=picture.object_id
+        where object.object_id=#{object_id}
+    </select>
+    <select id="getRentCount" resultType="Integer">
+        select count(*)
+        from object
+        join `order` on object.object_id=`order`.object_id
+        where object.object_id=#{object_id}
+    </select>
+
+    <select id="getObjectListByType" resultType="cn.hutool.json.JSONObject">
+        select object.object_id,name,rent_daliy,description,new_level,nick_name,avatar,reputation,url.picture_url,commentNum.count,commentNum.star
+        from object
+                 join user on object.user_id=user.user_id
+                 left outer join (select picture_url,object.object_id  from picture join object where picture.object_id=object.object_id limit 1)  url on  url.object_id=object.object_id
+                 left outer join (select count(*) count,object.object_id,avg(remarks.grade) star
+                                  from object
+                                      join remarks on object.object_id=remarks.object_id
+                                  GROUP BY object.object_id
+        ) commentNum on commentNum.object_id=object.object_id
+        where object.tag=#{type}
+    </select>
+
+    <select id="recommend" resultType="cn.hutool.json.JSONObject">
+        select object.object_id,name,rent_daliy,description,new_level,nick_name,avatar,reputation,url.picture_url,commentNum.count,commentNum.star
+        from object
+                 join user on object.user_id=user.user_id
+                 left outer join (select picture_url,object.object_id  from picture join object where picture.object_id=object.object_id limit 1)  url on  url.object_id=object.object_id
+                 left outer join (select count(*) count,object.object_id,avg(remarks.grade) star
+                                  from object
+                                      join remarks on object.object_id=remarks.object_id
+                                  GROUP BY object.object_id
+        ) commentNum on commentNum.object_id=object.object_id
+        order by commentNum.star
+        limit 6
     </select>
 
 

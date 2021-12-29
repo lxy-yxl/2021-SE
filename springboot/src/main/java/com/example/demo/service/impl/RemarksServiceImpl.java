@@ -8,10 +8,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-<<<<<<< Updated upstream
-=======
 import java.util.List;
->>>>>>> Stashed changes
+
 
 /**
  * <p>
@@ -27,17 +25,19 @@ public class RemarksServiceImpl extends ServiceImpl<RemarksMapper, Remarks> impl
     @Resource
     RemarksMapper remarksMapper;
 
-    public List<JSONObject> getRemarkList(int object_id){
-        return remarksMapper.getRemarkList(object_id);
+    public JSONObject getRemarkList(int object_id){
+        JSONObject jsonObject=new JSONObject();
+
+        List<JSONObject> remark_list = remarksMapper.getRemarkList(object_id);
+        jsonObject.put("remark_list",remark_list);
+        int count = remark_list.size();
+        jsonObject.put("commentNum",count);
+        return jsonObject;
     }
 
-    @Resource
-    RemarksServiceImpl remarksService;
 
-    @Resource
-    RemarksMapper remarksMapper;
 
-    public
+
 
 
 

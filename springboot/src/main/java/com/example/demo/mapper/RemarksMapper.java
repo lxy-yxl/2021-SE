@@ -17,10 +17,8 @@ import java.util.List;
  */
 public interface RemarksMapper extends BaseMapper<Remarks> {
 
-<<<<<<< Updated upstream
 
-=======
     List<JSONObject> getRemarkList(int object_id);
->>>>>>> Stashed changes
+
 
 }
