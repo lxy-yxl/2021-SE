@@ -71,7 +71,7 @@ public class ObjectServiceImpl extends ServiceImpl<ObjectMapper, Object> impleme
         object.setTag(tag);
         object.setRentDaliy(rent_daily);
         object.setNewLevel(new_level);
-        object.setStatus("审核通过");//管理员部分待做
+        object.setStatus("待审核");//管理员部分待做
         Integer count = objectMapper.insert(object);
         if(count<=0)
             return -1;
