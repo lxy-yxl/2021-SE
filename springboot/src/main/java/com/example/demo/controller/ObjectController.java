@@ -35,31 +35,32 @@ public class ObjectController {
 
     @UserLoginToken
     @PostMapping
-    public Result<?> upload(@RequestBody Object object){
+    public Result<?> upload(@RequestBody Object object) {
         objectMapper.insert(object);
         return Result.success();
     }
 
     @UserLoginToken
     @PostMapping("/getList")
-    public Result<?> findPage(@RequestParam(defaultValue = "1")Integer pageNum,
-                              @RequestParam(defaultValue = "10")Integer pageSize,
-                              @RequestParam(defaultValue = "")String search){
-        LambdaQueryWrapper<Object> wrapper= Wrappers.<Object>lambdaQuery();
-        if(StrUtil.isNotBlank(search)){
-            wrapper.like(Object::getName,search);
+    public Result<?> findPage(@RequestParam(defaultValue = "1") Integer pageNum,
+                              @RequestParam(defaultValue = "10") Integer pageSize,
+                              @RequestParam(defaultValue = "") String search) {
+        LambdaQueryWrapper<Object> wrapper = Wrappers.<Object>lambdaQuery();
+        if (StrUtil.isNotBlank(search)) {
+            wrapper.like(Object::getName, search);
         }
-        Page<Object> userPage=objectMapper.selectPage( new Page<>(pageNum ,pageSize),wrapper );
+        Page<Object> userPage = objectMapper.selectPage(new Page<>(pageNum, pageSize), wrapper);
         return Result.success(userPage);
     }
 
 
     @GetMapping("getObjectDetail")
-    public Result<?> getObjectDetail(int object_id){
-        JSONObject jsonObject=new JSONObject();
+    public Result<?> getObjectDetail(int object_id) {
+        JSONObject jsonObject = new JSONObject();
         jsonObject = objectService.getObjectDetail(object_id);
 
         return Result.success(jsonObject);
 
     }
+}
 
