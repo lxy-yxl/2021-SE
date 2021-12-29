@@ -5,6 +5,7 @@ import cn.hutool.json.JSONObject;
 import com.example.demo.common.Result;
 import com.example.demo.service.impl.RemarksServiceImpl;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
@@ -30,7 +31,7 @@ public class RemarksController {
     RemarksServiceImpl remarksService;
 
     @GetMapping("getRemarkList")
-    public Result<?> getRemarkList(int object_id){
+    public Result<?> getRemarkList(Integer object_id){
         JSONObject remarks = remarksService.getRemarkList(object_id);
         if(Objects.equals(remarks.get("commentNum").toString(), "0")){
             return Result.error("-1", "暂无评论");
@@ -38,6 +39,21 @@ public class RemarksController {
         else return Result.success(remarks);
     }
 
+    @PutMapping("giveRemark")
+    public Result<?> giveRemark(Integer order_id, Integer user_id, String content, Integer grade, Integer type){
+        Integer remark_id = remarksService.giveRemark(order_id, user_id, content, grade, type);
+        if(remark_id==-1)
+            return Result.error("-1","未找到该订单");
+        else if(remark_id==-2)
+            return Result.error("-2","订单当前不可评价或已评价");
+        else if(remark_id==-3)
+            return Result.error("-3","订单不属于当前用户");
+        else if(remark_id==-4)
+            return Result.error("-4","评价失败");
+        else
+            return Result.success(remark_id);
+
+    }
 
 }
 

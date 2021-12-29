@@ -6,6 +6,7 @@ import com.example.demo.common.Result;
 import com.example.demo.entity.Order;
 import com.example.demo.service.impl.OrderServiceImpl;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
@@ -36,7 +37,7 @@ public class OrderController {
 
     @GetMapping("getOrderList")
     public Result<?> getOrderList(int user_id){
-        List<Order> orderList = new ArrayList<>();
+        List<Order> orderList;
         orderList=orderService.getOrderList(user_id);
         if(orderList.isEmpty()){
             return Result.error("-1","没有订单记录");
@@ -46,9 +47,8 @@ public class OrderController {
 
 
 
-    @GetMapping("generateOrder")
+    @PostMapping("generateOrder")
     public Result<?> generateOrder(int object_id, int borrower_id, String lentout_time, String return_time, String campus) {
-        Order order = new Order();
         LocalDateTime parse_lentout_time = LocalDateTime.parse(lentout_time, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         LocalDateTime parse_return_time = LocalDateTime.parse(return_time, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         int order_id = orderService.generateOrder(object_id, borrower_id, parse_lentout_time, parse_return_time, campus);

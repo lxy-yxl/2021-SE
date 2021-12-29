@@ -49,8 +49,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
             if(count<=0)
                 return -2;
             else {
-                int order_id = order.getOrderId();
-                return order_id;
+                return order.getOrderId();
             }
         }
     }
@@ -90,8 +89,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     public List<Order> getOrderList(int user_id){
         QueryWrapper<Order> wrapper = new QueryWrapper<>();
         wrapper.eq("borrower_id", user_id);
-        List<Order> order_list = orderMapper.selectList(wrapper);
-        return order_list;
+        return orderMapper.selectList(wrapper);
     }
+
 
 }

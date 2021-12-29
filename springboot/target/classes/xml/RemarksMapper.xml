@@ -10,4 +10,6 @@
         where object.object_id=#{object_id}
     </select>
 
+
+
 </mapper>

@@ -22,7 +22,7 @@
 --             join picture on object.object_id=picture.object_id
 --             left outer join remarks on object.object_id=remarks.object_id
 --             left outer join user B on remarks.user_id=B.user_id
-        where object.object_id=#{object_id}
+        where object.object_id=#{object_id} and object.status='审核通过'
     </select>
     <select id="getPictureUrl" resultType="String">
         select picture_url
@@ -46,7 +46,7 @@
                                       join remarks on object.object_id=remarks.object_id
                                   GROUP BY object.object_id
         ) commentNum on commentNum.object_id=object.object_id
-        where object.tag=#{type}
+        where object.tag=#{type} and object.status='审核通过'
     </select>
 
     <select id="recommend" resultType="cn.hutool.json.JSONObject">
@@ -59,6 +59,7 @@
                                       join remarks on object.object_id=remarks.object_id
                                   GROUP BY object.object_id
         ) commentNum on commentNum.object_id=object.object_id
+        where object.status='审核通过'
         order by commentNum.star desc
         limit 6
     </select>
@@ -73,7 +74,7 @@
                                       join remarks on object.object_id=remarks.object_id
                                   GROUP BY object.object_id
         ) commentNum on commentNum.object_id=object.object_id
-        where name like CONCAT('%%',#{name},'%%')
+        where name like CONCAT('%%',#{name},'%%') and object.status='审核通过'
     </select>
 
 

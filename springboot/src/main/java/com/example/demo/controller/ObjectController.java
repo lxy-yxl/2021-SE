@@ -90,5 +90,32 @@ public class ObjectController {
             return Result.error("-1", "暂无商品信息");
         else return Result.success(iPage);
     }
+
+    @PostMapping("uploadObject")
+    public Result<?> uploadObject(Integer user_id,String name, String description, Integer deposit, String tag, Integer rent_daily, String new_level){
+        Integer object_id = objectService.uploadObject(user_id, name, description, deposit, tag, rent_daily, new_level);//上传图片没做
+        if(object_id==-1)
+            return Result.error("-1", "上传失败");
+        else return Result.success(object_id);
+    }
+
+    @PostMapping("modifyObject")
+    public Result<?> modifyObject(Integer object_id, String name, String description, Integer deposit, String tag, Integer rent_daily, String new_level){
+
+        Integer count = objectService.modifyObject(object_id, name, description, deposit, tag, rent_daily, new_level);
+        if(count<=0)
+            return Result.error("-1", "修改失败");
+        else return Result.success();
+    }
+
+    @GetMapping("viewOwnObjectList")
+    public Result<?> viewOwnObjectList(Integer user_id){
+        List<JSONObject> jsonObjects=objectService.viewOwnObjectList(user_id);
+        if(jsonObjects.isEmpty())
+            return Result.error("-1", "当前用户没有物品列表");
+        else return Result.success(jsonObjects);
+
+    }
+
 }
 

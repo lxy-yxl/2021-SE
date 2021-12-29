@@ -31,7 +31,7 @@ import lombok.EqualsAndHashCode;
 
     private String status;
 
-    private String deposit;
+    private Integer deposit;
 
     private String tag;
 
