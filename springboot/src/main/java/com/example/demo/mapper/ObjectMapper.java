@@ -30,4 +30,6 @@ public interface ObjectMapper extends BaseMapper<Object> {
     Page<JSONObject> getObjectListByType(String type, Page<JSONObject> ipage);
 
     List<JSONObject> recommend();
+
+    Page<JSONObject> searchObject(String name, Page<JSONObject> ipage);
 }

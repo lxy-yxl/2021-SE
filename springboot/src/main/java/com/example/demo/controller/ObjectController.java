@@ -81,5 +81,14 @@ public class ObjectController {
         }
         else return Result.success(jsonObjects);
     }
+
+    @GetMapping("searchObject")
+    public Result<?> searchObject(String name, Integer page){
+        Page<JSONObject> iPage = new Page<JSONObject>(page, 6);
+        iPage=objectService.searchObject(name,iPage);
+        if(iPage.getTotal()==0)
+            return Result.error("-1", "暂无商品信息");
+        else return Result.success(iPage);
+    }
 }
 

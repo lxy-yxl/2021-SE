@@ -45,4 +45,8 @@ public class ObjectServiceImpl extends ServiceImpl<ObjectMapper, Object> impleme
 
     }
 
+    public Page<JSONObject> searchObject(String name, Page<JSONObject> ipage){
+        return objectMapper.searchObject(name,ipage);
+    }
+
 }
