@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * <p>
@@ -24,7 +25,7 @@ public class ObjectServiceImpl extends ServiceImpl<ObjectMapper, Object> impleme
     ObjectMapper objectMapper;
 
     public JSONObject getObjectDetail(int object_id){
-        JSONObject detail=new JSONObject();
+        JSONObject detail;
         detail = objectMapper.getObjectDetail(object_id);
         return detail;
     }

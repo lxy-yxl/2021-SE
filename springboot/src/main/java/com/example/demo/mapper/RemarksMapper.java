@@ -1,7 +1,10 @@
 package com.example.demo.mapper;
 
+import cn.hutool.json.JSONObject;
 import com.example.demo.entity.Remarks;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,6 +17,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface RemarksMapper extends BaseMapper<Remarks> {
 
+<<<<<<< Updated upstream
 
+=======
+    List<JSONObject> getRemarkList(int object_id);
+>>>>>>> Stashed changes
 
 }

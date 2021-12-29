@@ -14,6 +14,7 @@ import com.example.demo.service.impl.ObjectServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 /**
@@ -55,8 +56,13 @@ public class ObjectController {
 
 
     @GetMapping("getObjectDetail")
+<<<<<<< Updated upstream
     public Result<?> getObjectDetail(int object_id) {
         JSONObject jsonObject = new JSONObject();
+=======
+    public Result<?> getObjectDetail(int object_id){
+        JSONObject jsonObject;
+>>>>>>> Stashed changes
         jsonObject = objectService.getObjectDetail(object_id);
 
         return Result.success(jsonObject);
