@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.io.Serializable;
 import lombok.Data;
@@ -23,7 +24,7 @@ import lombok.EqualsAndHashCode;
 
     private Integer objectId;
 
-    private LocalTime time;
+    private LocalDateTime time;
 
 
 }

@@ -101,7 +101,6 @@ public class ObjectController {
 
     @PostMapping("modifyObject")
     public Result<?> modifyObject(Integer object_id, String name, String description, Integer deposit, String tag, Integer rent_daily, String new_level){
-
         Integer count = objectService.modifyObject(object_id, name, description, deposit, tag, rent_daily, new_level);
         if(count<=0)
             return Result.error("-1", "修改失败");
@@ -116,6 +115,7 @@ public class ObjectController {
         else return Result.success(jsonObjects);
 
     }
+
 
 }
 

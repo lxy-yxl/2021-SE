@@ -13,4 +13,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface FavMapper extends BaseMapper<Fav> {
 
+    Integer queryObjectInFav(Integer object_id, Integer user_id);
+
 }

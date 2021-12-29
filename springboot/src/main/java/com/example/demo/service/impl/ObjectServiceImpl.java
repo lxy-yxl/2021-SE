@@ -99,8 +99,8 @@ public class ObjectServiceImpl extends ServiceImpl<ObjectMapper, Object> impleme
         List<Object> objects = objectMapper.selectList(wrapper);
         if(objects.isEmpty())
             return null;
-        QueryWrapper<Picture> pictureQueryWrapper = new QueryWrapper<>();
         for (Object object:objects) {
+            QueryWrapper<Picture> pictureQueryWrapper = new QueryWrapper<>();
             String url;
             pictureQueryWrapper.eq("object_id", object.getObjectId());
             Picture picture= pictureMapper.selectOne(pictureQueryWrapper);
